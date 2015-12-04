@@ -785,6 +785,16 @@ STATIC GC_bool GC_stopped_mark(GC_stop_func stop_func)
       (*GC_check_heap)();
     }
 
+    // RoboVM note: Call GC_finalize() while the world is stopped to make sure
+    // objects reachable from finalizable objects are marked before other
+    // threads can start to mutate them. This mutation could happen if the
+    // finalizable object is the referent of a SoftReference and is retrieved
+    // just after the world is started but before the SoftReference.referent
+    // field is cleared.
+#   ifndef GC_NO_FINALIZATION
+      GC_finalize();
+#   endif
+
 #   ifdef THREAD_LOCAL_ALLOC
       GC_world_stopped = FALSE;
 #   endif
@@ -1006,9 +1016,12 @@ STATIC void GC_finish_collection(void)
         /* The above just checks; it doesn't really reclaim anything.   */
     }
 
-#   ifndef GC_NO_FINALIZATION
-      GC_finalize();
-#   endif
+    // RoboVM note: Commented out call to GC_finalize() here. We need to call
+    // GC_finalize() while the world is stopped in GC_stopped_mark(). See the
+    // comment in GC_stopped_mark() for more info.
+//#   ifndef GC_NO_FINALIZATION
+//      GC_finalize();
+//#   endif
 #   ifdef STUBBORN_ALLOC
       GC_clean_changing_list();
 #   endif

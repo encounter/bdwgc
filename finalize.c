@@ -734,6 +734,8 @@ GC_INLINE void GC_remove_dangling_disappearing_links(
 /* Called with held lock (but the world is running).                    */
 /* Cause disappearing links to disappear and unreachable objects to be  */
 /* enqueued for finalization.                                           */
+// RoboVM note: In RoboVM we call this while the world is stopped. See comment
+// in GC_stopped_mark() in alloc.c for more info.
 GC_INNER void GC_finalize(void)
 {
     struct finalizable_object * curr_fo, * prev_fo, * next_fo;
