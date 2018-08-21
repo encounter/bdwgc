@@ -671,7 +671,7 @@ GC_INNER void GC_start_world(void)
 
       int j = (int)listcount;
       for (i = 0; i < GC_mach_threads_count; i++) {
-        thread_act_t thread = act_list[i];
+        thread_act_t thread = GC_mach_threads[i].thread;
         if (!GC_mach_threads[i].suspended) {
           /* this thread was failed to be suspended by GC_stop_world, */
           /* no actions needed                                        */
