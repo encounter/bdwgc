@@ -89,16 +89,6 @@ static void return_freelists(void **fl, void **gfl)
 # define reset_thread_key 0
 #endif
 
-/*
- * RoboVM note: Added to re-set the TLS on thread exit to allow thread local
- * allocations to happen in TLS destructors. GC_unregister_my_thread_inner()
- * will finally set the GC_thread_key to NULL which will stop this destructor
- * from being called repeatedly.
- */
-static void reset_thread_key(void* v) {
-    pthread_setspecific(GC_thread_key, v);
-}
-
 /* Each thread structure must be initialized.   */
 /* This call must be made from the new thread.  */
 GC_INNER void GC_init_thread_local(GC_tlfs p)

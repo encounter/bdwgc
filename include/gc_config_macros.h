@@ -364,14 +364,16 @@
 #ifdef GC_PTHREADS
 
 # if (defined(GC_DARWIN_THREADS) || defined(GC_WIN32_PTHREADS) \
-      || defined(__native_client__) || defined(GC_RTEMS_PTHREADS)) \
+      || defined(__native_client__) || defined(GC_RTEMS_PTHREADS) \
+      || defined(NINTENDO_SWITCH_LIBNX)) \
       && !defined(GC_NO_DLOPEN)
     /* Either there is no dlopen() or we do not need to intercept it.   */
 #   define GC_NO_DLOPEN
 # endif
 
 # if (defined(GC_DARWIN_THREADS) || defined(GC_WIN32_PTHREADS) \
-      || defined(GC_OPENBSD_THREADS) || defined(__native_client__)) \
+      || defined(GC_OPENBSD_THREADS) || defined(__native_client__) \
+      || defined(NINTENDO_SWITCH_LIBNX)) \
      && !defined(GC_NO_PTHREAD_SIGMASK)
     /* Either there is no pthread_sigmask() or no need to intercept it. */
 #   define GC_NO_PTHREAD_SIGMASK

@@ -321,6 +321,14 @@ case "$THREADS" in
  decosf1 | irix | mach | os2 | solaris | dce | vxworks)
     AC_MSG_ERROR(thread package $THREADS not yet supported)
     ;;
+ switch)
+    THREADS=posix
+    # THREADDLLIBS=-lpthread
+    AC_DEFINE(GC_THREADS)
+    AC_DEFINE(_REENTRANT)
+    use_parallel_mark=$enable_parallel_mark
+    use_thread_local_alloc=$enable_thread_local_alloc
+    ;;
  *)
     AC_MSG_ERROR($THREADS is an unknown thread package)
     ;;

@@ -160,7 +160,8 @@ EXTERN_C_BEGIN
 # if defined(__aarch64__)
 #    define AARCH64
 #    if !defined(LINUX) && !defined(DARWIN) && !defined(FREEBSD) \
-        && !defined(NETBSD) && !defined(NN_BUILD_TARGET_PLATFORM_NX)
+        && !defined(NETBSD) && !defined(NN_BUILD_TARGET_PLATFORM_NX) \
+        && !defined(NN_BUILD_TARGET_PLATFORM_LIBNX)
 #      define NOSYS
 #      define mach_type_known
 #    endif
@@ -685,6 +686,11 @@ EXTERN_C_BEGIN
 
 # if defined(NN_BUILD_TARGET_PLATFORM_NX)
 #   define NINTENDO_SWITCH
+#   define mach_type_known
+# endif
+
+# if defined(NN_BUILD_TARGET_PLATFORM_LIBNX)
+#   define NINTENDO_SWITCH_LIBNX
 #   define mach_type_known
 # endif
 
@@ -2340,6 +2346,16 @@ EXTERN_C_BEGIN
 #     define DATAEND (ptr_t)(&__bss_end)
       void *switch_get_stack_bottom(void);
 #     define STACKBOTTOM ((ptr_t)switch_get_stack_bottom())
+#   endif
+#   ifdef NINTENDO_SWITCH_LIBNX
+      extern int __bss_end__[];
+#     define NO_HANDLE_FORK 1
+#     define DATASTART (ptr_t)ALIGNMENT /* cannot be null */
+#     define DATAEND (ptr_t)(&__bss_end__)
+      void *switch_get_stack_bottom(void);
+#     define STACKBOTTOM ((ptr_t)switch_get_stack_bottom())
+#     define SIG_SUSPEND SIGUSR1
+#     define SIG_THR_RESTART SIGUSR2
 #   endif
 #   ifdef NOSYS
       /* __data_start is usually defined in the target linker script.   */
