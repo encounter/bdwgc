@@ -1242,7 +1242,7 @@ GC_INNER void GC_thr_init(void)
     }
   }
 
-# ifndef GC_DARWIN_THREADS
+# if !defined(GC_DARWIN_THREADS) && !defined(NINTENDO_SWITCH_LIBNX)
     GC_stop_init();
 # endif
 

@@ -2348,14 +2348,13 @@ EXTERN_C_BEGIN
 #     define STACKBOTTOM ((ptr_t)switch_get_stack_bottom())
 #   endif
 #   ifdef NINTENDO_SWITCH_LIBNX
+      extern int __got_end__[];
       extern int __bss_end__[];
 #     define NO_HANDLE_FORK 1
-#     define DATASTART (ptr_t)ALIGNMENT /* cannot be null */
-#     define DATAEND (ptr_t)(&__bss_end__)
-      void *switch_get_stack_bottom(void);
-#     define STACKBOTTOM ((ptr_t)switch_get_stack_bottom())
-#     define SIG_SUSPEND SIGUSR1
-#     define SIG_THR_RESTART SIGUSR2
+#     define DATASTART (ptr_t)(__got_end__) /* cannot be null */
+#     define DATAEND (ptr_t)(__bss_end__)
+      extern void *__stack_top;
+#     define STACKBOTTOM ((ptr_t) __stack_top)
 #   endif
 #   ifdef NOSYS
       /* __data_start is usually defined in the target linker script.   */
@@ -3035,7 +3034,8 @@ EXTERN_C_BEGIN
 #endif
 
 #if !defined(NO_MARKER_SPECIAL_SIGMASK) \
-    && (defined(NACL) || defined(GC_WIN32_PTHREADS))
+    && (defined(NACL) || defined(GC_WIN32_PTHREADS) \
+        || defined(NINTENDO_SWITCH_LIBNX))
   /* Either there is no pthread_sigmask(), or GC marker thread cannot   */
   /* steal and drop user signal calls.                                  */
 # define NO_MARKER_SPECIAL_SIGMASK

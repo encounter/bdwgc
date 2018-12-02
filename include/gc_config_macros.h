@@ -365,7 +365,7 @@
 
 # if (defined(GC_DARWIN_THREADS) || defined(GC_WIN32_PTHREADS) \
       || defined(__native_client__) || defined(GC_RTEMS_PTHREADS) \
-      || defined(NINTENDO_SWITCH_LIBNX)) \
+      || defined(NN_BUILD_TARGET_PLATFORM_LIBNX)) \
       && !defined(GC_NO_DLOPEN)
     /* Either there is no dlopen() or we do not need to intercept it.   */
 #   define GC_NO_DLOPEN
@@ -373,7 +373,7 @@
 
 # if (defined(GC_DARWIN_THREADS) || defined(GC_WIN32_PTHREADS) \
       || defined(GC_OPENBSD_THREADS) || defined(__native_client__) \
-      || defined(NINTENDO_SWITCH_LIBNX)) \
+      || defined(NN_BUILD_TARGET_PLATFORM_LIBNX)) \
      && !defined(GC_NO_PTHREAD_SIGMASK)
     /* Either there is no pthread_sigmask() or no need to intercept it. */
 #   define GC_NO_PTHREAD_SIGMASK
@@ -394,7 +394,8 @@
 
 # if !defined(GC_HAVE_PTHREAD_EXIT) \
      && !defined(HOST_ANDROID) && !defined(__ANDROID__) \
-     && (defined(GC_LINUX_THREADS) || defined(GC_SOLARIS_THREADS))
+     && (defined(GC_LINUX_THREADS) || defined(GC_SOLARIS_THREADS) \
+         || defined(NN_BUILD_TARGET_PLATFORM_LIBNX))
 #   define GC_HAVE_PTHREAD_EXIT
     /* Intercept pthread_exit on Linux and Solaris.     */
 #   if GC_GNUC_PREREQ(2, 7)
@@ -406,7 +407,8 @@
 #   endif
 # endif
 
-# if (!defined(GC_HAVE_PTHREAD_EXIT) || defined(__native_client__)) \
+# if (!defined(GC_HAVE_PTHREAD_EXIT) || defined(__native_client__) \
+      || defined(NN_BUILD_TARGET_PLATFORM_LIBNX)) \
      && !defined(GC_NO_PTHREAD_CANCEL)
     /* Either there is no pthread_cancel() or no need to intercept it.  */
 #   define GC_NO_PTHREAD_CANCEL
