@@ -19,7 +19,7 @@
 
 #if defined(GC_PTHREADS) && !defined(GC_WIN32_THREADS) && \
     !defined(GC_DARWIN_THREADS) && !defined(SN_TARGET_ORBIS) \
-    && !defined(SN_TARGET_PSP2) && !defined(NN_BUILD_TARGET_PLATFORM_LIBNX)
+    && !defined(SN_TARGET_PSP2)
 
 #ifdef NACL
 

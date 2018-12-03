@@ -2353,8 +2353,7 @@ EXTERN_C_BEGIN
 #     define NO_HANDLE_FORK 1
 #     define DATASTART (ptr_t)(__got_end__) /* cannot be null */
 #     define DATAEND (ptr_t)(__bss_end__)
-      extern void *__stack_top;
-#     define STACKBOTTOM ((ptr_t) __stack_top)
+#     define GC_OPENBSD_UTHREADS // For thread suspension
 #   endif
 #   ifdef NOSYS
       /* __data_start is usually defined in the target linker script.   */

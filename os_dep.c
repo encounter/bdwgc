@@ -1212,7 +1212,7 @@ GC_INNER size_t GC_page_size = 0;
 # define GET_MAIN_STACKBASE_SPECIAL
 #elif !defined(AMIGA) && !defined(HAIKU) && !defined(OS2) \
       && !defined(MSWIN32) && !defined(MSWINCE) && !defined(CYGWIN32) \
-      && !defined(GC_OPENBSD_THREADS) \
+      && !defined(GC_OPENBSD_THREADS) && !defined(NINTENDO_SWITCH_LIBNX) \
       && (!defined(GC_SOLARIS_THREADS) || defined(_STRICT_STDC))
 
 # if (defined(HAVE_PTHREAD_ATTR_GET_NP) || defined(HAVE_PTHREAD_GETATTR_NP)) \
@@ -1393,7 +1393,7 @@ GC_INNER size_t GC_page_size = 0;
 # define HAVE_GET_STACK_BASE
 #endif /* GC_DARWIN_THREADS */
 
-#ifdef GC_OPENBSD_THREADS
+#if defined(GC_OPENBSD_THREADS) || defined(NINTENDO_SWITCH_LIBNX)
 # include <sys/signal.h>
 # include <pthread.h>
 # include <pthread_np.h>

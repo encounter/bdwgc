@@ -1729,7 +1729,7 @@ GC_API void GC_CALL GC_enable_incremental(void)
 # elif defined(NN_PLATFORM_CTR)
     int n3ds_log_write(const char* text, int length);
 #   define WRITE(level, buf, len) n3ds_log_write(buf, len)
-# elif defined(NINTENDO_SWITCH)
+# elif defined(NINTENDO_SWITCH) || defined(NINTENDO_SWITCH_LIBNX)
     int switch_log_write(const char* text, int length);
 #   define WRITE(level, buf, len) switch_log_write(buf, len)
 
