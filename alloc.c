@@ -1185,9 +1185,9 @@ STATIC void GC_finish_collection(void)
     // RoboVM note: Commented out call to GC_finalize() here. We need to call
     // GC_finalize() while the world is stopped in GC_stopped_mark(). See the
     // comment in GC_stopped_mark() for more info.
-//#   ifndef GC_NO_FINALIZATION
-//      GC_finalize();
-//#   endif
+#   ifndef GC_NO_FINALIZATION
+      GC_finalize();
+#   endif
 #   ifndef NO_CLOCK
       if (GC_print_stats)
         GET_TIME(finalize_time);

@@ -3820,7 +3820,7 @@ GC_INNER GC_bool GC_dirty_init(void)
   }
 #endif /* !GC_DISABLE_INCREMENTAL */
 
-#if defined(MPROTECT_VDB) && defined(DARWIN) && !defined(GC_DISABLE_INCREMENTAL)
+#if defined(MPROTECT_VDB) && defined(DARWIN)
 /* The following sources were used as a "reference" for this exception
    handling code:
       1. Apple's mach/xnu documentation

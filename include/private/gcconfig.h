@@ -2348,11 +2348,11 @@ EXTERN_C_BEGIN
 #     define STACKBOTTOM ((ptr_t)switch_get_stack_bottom())
 #   endif
 #   ifdef NINTENDO_SWITCH_LIBNX
-      extern int __got_end__[];
-      extern int __bss_end__[];
+      extern int __data_start__[];
+      extern int __data_end__[];
 #     define NO_HANDLE_FORK 1
-#     define DATASTART (ptr_t)(__got_end__) /* cannot be null */
-#     define DATAEND (ptr_t)(__bss_end__)
+#     define DATASTART (ptr_t)(&__data_start__) /* cannot be null */
+#     define DATAEND (ptr_t)(&__data_end__)
 #     define GC_OPENBSD_UTHREADS // For thread suspension
 #   endif
 #   ifdef NOSYS
